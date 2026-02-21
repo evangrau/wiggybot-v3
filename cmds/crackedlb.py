@@ -2,6 +2,7 @@ from discord.ext import commands
 from discord import Embed, Color
 from classes.dbconnection import DBConnection
 from loguru import logger as log
+from settings import MODE
 
 @commands.hybrid_command()
 async def crackedlb(ctx):
@@ -13,14 +14,14 @@ async def crackedlb(ctx):
         # getting access to the database
         db = DBConnection()
 
-        records = db.get_all_records("cracked_table", sort_by="cracked:bad")
+        records = db.get_all_records(f"cracked_table_{MODE}", sort_by="cracked:bad")
         members = []
 
         if not records.empty:
             for _, r in records.iterrows():
                 members.append([r['fields.discord_id'], r['fields.cracked'], r['fields.bad'], r['fields.cracked:bad']])
         else:
-            raise ValueError("No records found in the 'cracked_table' Airtable table.")
+            raise ValueError("No records found in the 'cracked_table_{MODE}' Airtable table.")
         
         # creating the embed
         names = ""

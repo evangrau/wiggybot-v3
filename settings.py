@@ -13,6 +13,8 @@ log.add(sys.stderr, level="DEBUG", colorize=True)
 
 COMMAND_PREFIX = "!"
 
+MODE = "prod"
+
 ADMIN_IDS = [294217244802678784]
 
 AIRTABLE_DB = os.getenv('AIRTABLE_DATABASE_ID')

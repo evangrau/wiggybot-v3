@@ -1,16 +1,21 @@
-import random
 import discord
 import settings
+from argparse import ArgumentParser
 from discord.ext import commands
 from loguru import logger as log
 
-def main():
+def main(args):
+
+    log.info(f"Starting wiggy Bot in {args.mode} mode...")
+
+    # Set a variable in settings to indicate the mode
+    settings.MODE = args.mode
 
     intents = discord.Intents.default()
     intents.message_content = True
     intents.members = True
 
-    activity = discord.Game(name=f"Use {settings.COMMAND_PREFIX}help for commands!")
+    activity = discord.Game(name=f"{settings.COMMAND_PREFIX}help")
     
     bot = commands.Bot(command_prefix=settings.COMMAND_PREFIX, intents=intents, activity=activity)
     
@@ -58,4 +63,17 @@ def main():
     bot.run(settings.DISCORD_API_SECRET, root_logger=True)
 
 if __name__ == "__main__":
-    main()
+
+    parser = ArgumentParser(description="Run the wiggy bot.")
+
+    parser.add_argument(
+        "-m", "--mode",
+        choices=["dev", "prod"],
+        default="prod",
+        help="Set the mode for the bot (default: prod)",
+        required=True
+    )
+
+    args = parser.parse_args()
+
+    main(args)

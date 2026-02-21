@@ -1,6 +1,7 @@
 from discord.ext import commands
 from classes.dbconnection import DBConnection
 from loguru import logger as log
+from settings import MODE
 
 @commands.hybrid_command(hidden=True)
 @commands.is_owner()
@@ -11,7 +12,7 @@ async def airtable_test(ctx):
 
     try:
         db = DBConnection()
-        records = db.get_all_records("cracked_table")
+        records = db.get_all_records(f"cracked_table_{MODE}")
         if not records.empty:
             await ctx.send(f"Successfully retrieved {len(records)} records from Airtable!")
             log.info(f"Successfully retrieved {len(records)} records from Airtable!")

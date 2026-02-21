@@ -1,6 +1,7 @@
 from discord.ext import commands
 from classes.dbconnection import DBConnection
 from loguru import logger as log
+from settings import MODE
 
 @commands.hybrid_command()
 async def crackedin(ctx):
@@ -13,7 +14,7 @@ async def crackedin(ctx):
         db = DBConnection()
 
         # check to make sure they aren't already in the db
-        records = db.get_all_records("cracked_table")
+        records = db.get_all_records(f"cracked_table_{MODE}")
         
         for _, r in records.iterrows():
             if r['fields.discord_id'] == str(ctx.author.id):
@@ -23,8 +24,8 @@ async def crackedin(ctx):
 
         # updating the database
         record = {"discord_id": f"{ctx.author.id}", "username": f"{ctx.author.name}", "cracked": 0, "bad": 0}
-        db.create_record("cracked_table", record)
-        log.info(f"{ctx.author.name} ({ctx.author.id}) has been added to the cracked_table in Airtable with record: {record}.")
+        db.create_record(f"cracked_table_{MODE}", record)
+        log.info(f"{ctx.author.name} ({ctx.author.id}) has been added to the cracked_table_{MODE} in Airtable with record: {record}.")
 
         await ctx.send(f"<@{ctx.author.id}>, you have opted in to be cracked... or bad.")
     except Exception as e:
