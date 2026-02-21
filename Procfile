@@ -1,1 +1,1 @@
-web: docker compose up --build
+worker: uv run main.py
