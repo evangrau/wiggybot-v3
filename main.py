@@ -37,19 +37,19 @@ def main():
     async def get_join_date(interaction : discord.Interaction, member : discord.Member):
         await interaction.response.send_message(f"{member.name} joined on {discord.utils.format_dt(member.joined_at)}", ephemeral=True)
 
-    @bot.command(hidden=True)
+    @bot.hybrid_command(hidden=True)
     @commands.is_owner()
     async def load(ctx, cog: str):
         log.debug(f"Attempting to load cog: {cog}")
         await bot.load_extension(f"cogs.{cog.lower()}")
     
-    @bot.command(hidden=True)
+    @bot.hybrid_command(hidden=True)
     @commands.is_owner()
     async def unload(ctx, cog: str):
         log.debug(f"Attempting to unload cog: {cog}")
         await bot.unload_extension(f"cogs.{cog.lower()}")
 
-    @bot.command(hidden=True)
+    @bot.hybrid_command(hidden=True)
     @commands.is_owner()
     async def reload(ctx, cog: str):
         log.debug(f"Attempting to reload cog: {cog}")

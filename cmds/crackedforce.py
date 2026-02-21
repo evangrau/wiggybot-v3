@@ -3,7 +3,7 @@ from utils import get_cracked
 from loguru import logger as log
 from settings import ADMIN_IDS
 
-@commands.command(hidden=True)
+@commands.hybrid_command(hidden=True)
 async def crackedforce(ctx):
     """Forces cracked if the bot doesn't go off."""
 

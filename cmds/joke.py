@@ -3,7 +3,7 @@ import requests
 import random
 from loguru import logger as log
 
-@commands.command()
+@commands.hybrid_command()
 async def joke(ctx):
     """Gets a random joke"""
 

@@ -2,7 +2,7 @@ from discord.ext import commands
 from classes.dbconnection import DBConnection
 from loguru import logger as log
 
-@commands.command()
+@commands.hybrid_command()
 async def crackedin(ctx):
     """Opts you in to daily cracked."""
 

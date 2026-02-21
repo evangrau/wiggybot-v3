@@ -3,7 +3,7 @@ from discord import Embed, Color
 from classes.dbconnection import DBConnection
 from loguru import logger as log
 
-@commands.command()
+@commands.hybrid_command()
 async def crackedlb(ctx):
     """Gets the cracked/bad leaderboard."""
 

@@ -2,7 +2,7 @@ from discord.ext import commands
 from classes.dbconnection import DBConnection
 from loguru import logger as log
 
-@commands.command(hidden=True)
+@commands.hybrid_command(hidden=True)
 @commands.is_owner()
 async def airtable_test(ctx):
     """Test command to check if Airtable connection is working."""
