@@ -17,11 +17,11 @@ def main(args):
 
     activity = discord.Game(name=f"{settings.COMMAND_PREFIX}help")
     
-    bot = commands.Bot(command_prefix=settings.COMMAND_PREFIX, intents=intents, activity=activity)
+    bot = commands.AutoShardedBot(command_prefix=settings.COMMAND_PREFIX, intents=intents, activity=activity)
     
     @bot.event
     async def on_ready():
-        log.debug(f"User: {bot.user} (ID: {bot.user.id})")
+        log.debug(f"User: {bot.user} (ID: {bot.user.id}, Shards: {bot.shard_count})")
         log.info("wiggy Bot is Online!")
 
         for cmd_file in settings.CMDS_DIR.glob("*.py"):
@@ -59,6 +59,13 @@ def main(args):
     async def reload(ctx, cog: str):
         log.debug(f"Attempting to reload cog: {cog}")
         await bot.reload_extension(f"cogs.{cog.lower()}")
+
+    @bot.hybrid_command()
+    @commands.is_owner()
+    async def shardinfo(ctx):
+        sid = ctx.guild.shard_id
+        shard = bot.get_shard(sid)
+        await ctx.send(f"Guild shard: {sid} | shard latency: {shard.latency*1000:.0f}ms")
     
     bot.run(settings.DISCORD_API_SECRET, root_logger=True)
 
