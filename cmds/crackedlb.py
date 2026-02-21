@@ -19,10 +19,10 @@ async def crackedlb(ctx):
 
         if not records.empty:
             for _, r in records.iterrows():
-                if r['fields.visible'] == True:
+                if r['fields.visible_bool'] == True:
                     members.append([r['fields.discord_id'], r['fields.cracked'], r['fields.bad'], r['fields.cracked:bad']])
         else:
-            raise ValueError("No records found in the 'cracked_table_{MODE}' Airtable table.")
+            raise ValueError(f"No records found in the 'cracked_table_{MODE}' Airtable table.")
         
         # creating the embed
         names = ""

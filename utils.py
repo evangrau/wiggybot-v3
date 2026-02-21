@@ -13,7 +13,7 @@ async def get_cracked(ctx):
 
         if not records.empty:
             for _, r in records.iterrows():
-                if r['fields.visible'] == True:
+                if r['fields.visible_bool'] == True:
                     members.append([r['id'], r['fields.discord_id'], r['fields.username'], r['fields.cracked'], r['fields.bad']])
         else:
             raise ValueError(f"No records found in the 'cracked_table_{MODE}' Airtable table.")

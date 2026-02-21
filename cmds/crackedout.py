@@ -14,13 +14,13 @@ async def crackedout(ctx):
         db = DBConnection()
 
         # check to make sure they are in the db
-        records = db.get_all_records("cracked_table_{MODE}")
+        records = db.get_all_records(f"cracked_table_{MODE}")
         
         for _, r in records.iterrows():
             if r['fields.discord_id'] == str(ctx.author.id):
-                if r['fields.visible'] == True:
+                if r['fields.visible_bool'] == True:
                     db.update_record(f'cracked_table_{MODE}', r['id'], {"visible": False})
-                    await ctx.send(f"<@{ctx.author.id}>, you have opted out of being cracked or bad.")
+                    await ctx.send(f"<@{ctx.author.id}>, you have opted out of being cracked or bad. Don't worry, your data is saved and you can opt back in at any time with the `crackedin` command.")
                     log.info(f"{ctx.author.name} ({ctx.author.id}) has been updated in the cracked_table_{MODE} in Airtable with record: {{'visible': False}}.")
                     return
                 else:

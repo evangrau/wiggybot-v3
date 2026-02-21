@@ -19,6 +19,7 @@ class DBConnection:
             records = self.get_table(table).all(sort=sort_by)
         else:
             records = self.get_table(table).all()
+        log.debug(f"Records retrieved from Airtable: {records}")
         return pd.json_normalize(records)
     
     def create_record(self, table: str, record: dict):
