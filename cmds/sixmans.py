@@ -8,3 +8,6 @@ async def sixmans(ctx):
     log.info("Running 6mans command...")
 
     await ctx.send("6mans is coming soon!")
+
+async def setup(bot):
+    bot.add_command(sixmans)
