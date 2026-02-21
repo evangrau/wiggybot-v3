@@ -1,0 +1,7 @@
+services:
+  wiggybot:
+    build: .
+    container_name: wiggybot
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
