@@ -14,12 +14,13 @@ async def crackedlb(ctx):
         # getting access to the database
         db = DBConnection()
 
-        records = db.get_all_records(f"cracked_table_{MODE}", sort_by="cracked:bad")
+        records = db.get_all_records(f"cracked_table_{MODE}", sort_by=["cracked:bad"])
         members = []
 
         if not records.empty:
             for _, r in records.iterrows():
-                members.append([r['fields.discord_id'], r['fields.cracked'], r['fields.bad'], r['fields.cracked:bad']])
+                if r['fields.visible'] == True:
+                    members.append([r['fields.discord_id'], r['fields.cracked'], r['fields.bad'], r['fields.cracked:bad']])
         else:
             raise ValueError("No records found in the 'cracked_table_{MODE}' Airtable table.")
         

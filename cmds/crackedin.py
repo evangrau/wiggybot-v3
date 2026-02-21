@@ -18,12 +18,18 @@ async def crackedin(ctx):
         
         for _, r in records.iterrows():
             if r['fields.discord_id'] == str(ctx.author.id):
-                await ctx.send(f"<@{ctx.author.id}>, you have already opted in.")
-                log.warning(f"{ctx.author.name} ({ctx.author.id}) has already opted in to crackedin. Returning without adding to database.")
-                return
+                if r['fields.visible'] == False:
+                    db.update_record(f'cracked_table_{MODE}', r['id'], {"visible": True})
+                    await ctx.send(f"<@{ctx.author.id}>, you have opted back in to being cracked or bad.")
+                    log.info(f"{ctx.author.name} ({ctx.author.id}) has been updated in the cracked_table_{MODE} in Airtable with record: {{'visible': True}}.")
+                    return
+                else:
+                    await ctx.send(f"<@{ctx.author.id}>, you have already opted in.")
+                    log.warning(f"{ctx.author.name} ({ctx.author.id}) has already opted in to crackedin. Returning without adding to database.")
+                    return
 
         # updating the database
-        record = {"discord_id": f"{ctx.author.id}", "username": f"{ctx.author.name}", "cracked": 0, "bad": 0}
+        record = {"discord_id": f"{ctx.author.id}", "username": f"{ctx.author.name}", "cracked": 0, "bad": 0, "visible": True}
         db.create_record(f"cracked_table_{MODE}", record)
         log.info(f"{ctx.author.name} ({ctx.author.id}) has been added to the cracked_table_{MODE} in Airtable with record: {record}.")
 

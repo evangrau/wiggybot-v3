@@ -18,10 +18,15 @@ async def crackedout(ctx):
         
         for _, r in records.iterrows():
             if r['fields.discord_id'] == str(ctx.author.id):
-                db.delete_record(f'cracked_table_{MODE}', r['id'])
-                await ctx.send(f"<@{ctx.author.id}>, you have opted out of being cracked or bad.")
-                log.info(f"{ctx.author.name} ({ctx.author.id}) has been removed from the cracked_table_{MODE} in Airtable.")
-                return
+                if r['fields.visible'] == True:
+                    db.update_record(f'cracked_table_{MODE}', r['id'], {"visible": False})
+                    await ctx.send(f"<@{ctx.author.id}>, you have opted out of being cracked or bad.")
+                    log.info(f"{ctx.author.name} ({ctx.author.id}) has been updated in the cracked_table_{MODE} in Airtable with record: {{'visible': False}}.")
+                    return
+                else:
+                    await ctx.send(f"<@{ctx.author.id}>, you have already opted out.")
+                    log.warning(f"{ctx.author.name} ({ctx.author.id}) has already opted out of crackedout. Returning without updating the database.")
+                    return
 
         await ctx.send(f"<@{ctx.author.id}>, you are not currently opted in.")
         log.warning(f"{ctx.author.name} ({ctx.author.id}) attempted to use crackedout command but was not found in the database.")

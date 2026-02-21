@@ -12,11 +12,11 @@ class DBConnection:
         log.debug(f"Getting table '{table}' from Airtable database with ID '{ID}'.")
         return api.table(ID, table)
     
-    def get_all_records(self, table: str, sort_by: str = None) -> pd.DataFrame:
+    def get_all_records(self, table: str, sort_by: list = None) -> pd.DataFrame:
         log.debug(f"Retrieving all records from table '{table}' in Airtable database with ID '{ID}'.")
         if sort_by:
             log.debug(f"Sorting records by '{sort_by}'.")
-            records = self.get_table(table).all(sort=[sort_by])
+            records = self.get_table(table).all(sort=sort_by)
         else:
             records = self.get_table(table).all()
         return pd.json_normalize(records)
