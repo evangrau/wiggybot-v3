@@ -10,8 +10,11 @@ async def get_cracked(ctx):
 
         members = []
 
-        for _, r in records.iterrows():
-            members.append([r['id'], r['fields.discord_id'], r['fields.username'], r['fields.cracked'], r['fields.bad']])
+        if not records.empty:
+            for _, r in records.iterrows():
+                members.append([r['id'], r['fields.discord_id'], r['fields.username'], r['fields.cracked'], r['fields.bad']])
+        else:
+            raise ValueError("No records found in the 'cracked_table' Airtable table.")
 
         m = random.choice(members)
 
