@@ -1,0 +1,13 @@
+services:
+  prod:
+    command: ["-m", "prod"]
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+  dev:
+    command: ["-m", "dev"]
+    build: .
+    restart: unless-stopped
+    volumes:
+      - .:/app
