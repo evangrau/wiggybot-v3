@@ -1,10 +1,12 @@
 services:
   prod:
+    container_name: wiggybot
     command: ["-m", "prod"]
     build: .
     volumes:
       - ./logs:/app/logs
   dev:
+    container_name: wiggybot-dev
     command: ["-m", "dev"]
     build: .
     volumes:
