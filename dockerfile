@@ -10,7 +10,7 @@ WORKDIR /app
 COPY classes ./classes
 COPY cogs ./cogs
 COPY cmds ./cmds
-COPY main.py utils.py settings.py pyproject.toml uv.lock ./
+COPY main.py utils.py settings.py pyproject.toml uv.lock .env ./
 
 # Ensure `uv`-installed binaries are on PATH
 ENV PATH=/app/bin:$PATH
