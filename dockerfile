@@ -15,6 +15,7 @@ ENV PYTHONUNBUFFERED=1
 # Copy app into the image
 WORKDIR /app
 COPY db ./db
+COPY sql ./sql
 COPY cogs ./cogs
 COPY cmds ./cmds
 COPY main.py settings.py pyproject.toml uv.lock ./
