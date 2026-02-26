@@ -25,7 +25,7 @@ async def crackedforce(interaction : discord.Interaction):
         if not records.empty:
             for _, r in records.iterrows():
                 if r['visible'] == True:
-                    members.append({"discord_id": r['discord_id'], "username": r['username'], "cracked": r['cracked'], "bad": r['bad'], "ratio": r['ratio']})
+                    members.append({"discord_id": r['discord_id'], "username": r['username'], "cracked_count": r['cracked_count'], "bad_count": r['bad_count'], "ratio": r['ratio']})
         else:
             raise ValueError(f"No records found in the cracked table.")
 
@@ -40,17 +40,17 @@ async def crackedforce(interaction : discord.Interaction):
         if (rand < 5):
             # bad
             await interaction.response.send_message(f"<@{m['discord_id']}>, you're bad.")
-            await db.update_record('cracked', m['discord_id'], {"bad": m['bad'] + 1})
-            log.info(f"Cracked command ran and {m['username']} was bad: {{'bad': {m['bad'] + 1}}}")
+            await db.update_record('cracked', m['discord_id'], {"bad_count": m['bad_count'] + 1})
+            log.info(f"Cracked command ran and {m['username']} was bad: {{'bad_count': {m['bad_count'] + 1}}}")
         else:
             # cracked
             await interaction.response.send_message(f"<@{m['discord_id']}>, you're cracked.")
-            await db.update_record('cracked', m['discord_id'], {"cracked": m['cracked'] + 1})
-            log.info(f"Cracked command ran and {m['username']} was cracked: {{'cracked': {m['cracked'] + 1}}}")
+            await db.update_record('cracked', m['discord_id'], {"cracked_count": m['cracked_count'] + 1})
+            log.info(f"Cracked command ran and {m['username']} was cracked: {{'cracked_count': {m['cracked_count'] + 1}}}")
     except Exception as e:
         await interaction.response.send_message("An error occurred while running the cracked command. Please check the logs for more details.")
         log.error(f"An error occurred while running cracked command: {e}")
     
 
 async def setup(bot):
-    bot.add_command(crackedforce)
+    bot.tree.add_command(crackedforce)

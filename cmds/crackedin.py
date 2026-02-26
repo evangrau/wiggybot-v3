@@ -36,4 +36,4 @@ async def crackedin(interaction : discord.Interaction):
 
 
 async def setup(bot):
-    bot.add_command(crackedin)
+    bot.tree.add_command(crackedin)

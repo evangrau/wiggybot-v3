@@ -23,4 +23,4 @@ async def dbtest(interaction : discord.Interaction):
         log.error(f"An error occurred while connecting to the database: {e}")
 
 async def setup(bot):
-    bot.add_command(dbtest)
+    bot.tree.add_command(dbtest)

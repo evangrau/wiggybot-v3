@@ -18,7 +18,7 @@ async def crackedlb(interaction : discord.Interaction):
         if not records.empty:
             for _, r in records.iterrows():
                 if r['visible'] == True:
-                    members.append([r['discord_id'], r['cracked'], r['bad']])
+                    members.append([r['discord_id'], r['cracked_count'], r['bad_count']])
         else:
             raise ValueError(f"No records found in the cracked table.")
         
@@ -49,4 +49,4 @@ async def crackedlb(interaction : discord.Interaction):
         log.error(f"An error occurred while running crackedlb command: {e}")
 
 async def setup(bot):
-    bot.add_command(crackedlb)
+    bot.tree.add_command(crackedlb)

@@ -38,4 +38,4 @@ async def joke(interaction : discord.Interaction):
         log.error(f"An error occurred while fetching a joke: {e}")
 
 async def setup(bot):
-    bot.add_command(joke)
+    bot.tree.add_command(joke)

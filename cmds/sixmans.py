@@ -10,4 +10,4 @@ async def sixmans(ctx):
     await ctx.send("6mans is coming soon!")
 
 async def setup(bot):
-    bot.add_command(sixmans)
+    bot.tree.add_command(sixmans)

@@ -32,4 +32,4 @@ async def crackedout(interaction : discord.Interaction):
         log.error(f"An error occurred while running crackedout command: {e}")
 
 async def setup(bot):
-    bot.add_command(crackedout)
+    bot.tree.add_command(crackedout)

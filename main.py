@@ -11,6 +11,8 @@ def main(args):
     # Set a variable in settings to indicate the mode
     settings.MODE = args.mode
 
+    synced = False
+
     intents = discord.Intents.default()
     intents.message_content = True
     intents.members = True
@@ -24,10 +26,15 @@ def main(args):
         log.debug(f"User: {bot.user} (ID: {bot.user.id}, Shards: {bot.shard_count})")
         log.info("wiggy Bot is Online!")
 
-        for cmd_file in settings.CMDS_DIR.glob("*.py"):
-            if cmd_file.name != "__init__.py":
-                log.debug(f"Attempting to load command: {cmd_file.name[:-3]}")
-                await bot.load_extension(f"cmds.{cmd_file.name[:-3]}")
+        global synced
+        if synced:
+            return
+        synced = True
+
+        # for cmd_file in settings.CMDS_DIR.glob("*.py"):
+        #     if cmd_file.name != "__init__.py":
+        #         log.debug(f"Attempting to load command: {cmd_file.name[:-3]}")
+        #         await bot.load_extension(f"cmds.{cmd_file.name[:-3]}")
 
         for cog_file in settings.COGS_DIR.glob("*.py"):
             if cog_file.name != "__init__.py":
