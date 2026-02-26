@@ -1,11 +1,10 @@
-import discord
-from discord import app_commands
+from discord.ext import commands
 import requests
 import random
 from loguru import logger as log
 
-@app_commands.command(name="joke", description="Get a random joke.")
-async def joke(interaction : discord.Interaction):
+@commands.hybrid_command(name="joke", description="Get a random joke.")
+async def joke(ctx : commands.Context):
     """Gets a random joke"""
 
     log.info("Running joke command...")
@@ -27,15 +26,15 @@ async def joke(interaction : discord.Interaction):
         res = r.json()
 
         if type == 0:
-            await interaction.response.send_message(res["joke"])
+            await ctx.send(res["joke"])
         else:
             if res["type"] == "twopart":
-                await interaction.response.send_message(f"{res['setup']}\n||{res['delivery']}||")
+                await ctx.send(f"{res['setup']}\n||{res['delivery']}||")
             else:
-                await interaction.response.send_message(res["joke"])
+                await ctx.send(res["joke"])
     except Exception as e:
-        await interaction.response.send_message("An error occurred while fetching a joke. Please check the logs for more details.")
+        await ctx.send("An error occurred while fetching a joke. Please check the logs for more details.")
         log.error(f"An error occurred while fetching a joke: {e}")
 
 async def setup(bot):
-    bot.tree.add_command(joke)
+    bot.add_command(joke)

@@ -31,10 +31,10 @@ def main(args):
             return
         synced = True
 
-        # for cmd_file in settings.CMDS_DIR.glob("*.py"):
-        #     if cmd_file.name != "__init__.py":
-        #         log.debug(f"Attempting to load command: {cmd_file.name[:-3]}")
-        #         await bot.load_extension(f"cmds.{cmd_file.name[:-3]}")
+        for cmd_file in settings.CMDS_DIR.glob("*.py"):
+            if cmd_file.name != "__init__.py":
+                log.debug(f"Attempting to load command: {cmd_file.name[:-3]}")
+                await bot.load_extension(f"cmds.{cmd_file.name[:-3]}")
 
         for cog_file in settings.COGS_DIR.glob("*.py"):
             if cog_file.name != "__init__.py":

@@ -1,12 +1,10 @@
-import discord
-from discord import app_commands
+from discord.ext import commands
 from discord import Embed, Color
 from db import database as db
 from loguru import logger as log
-from settings import MODE
 
-@app_commands.command(name="crackedlb", description="Gets the cracked/bad leaderboard.")
-async def crackedlb(interaction : discord.Interaction):
+@commands.hybrid_command(name="crackedlb", description="Gets the cracked/bad leaderboard.")
+async def crackedlb(ctx : commands.Context):
     """Gets the cracked/bad leaderboard."""
 
     log.info("Running crackedlb command...")
@@ -42,11 +40,11 @@ async def crackedlb(interaction : discord.Interaction):
         embed.add_field(name="Cracked", value=cracked)
         embed.add_field(name="Bad", value=bad)
 
-        await interaction.response.send_message(embed=embed)
+        await ctx.send(embed=embed)
 
     except Exception as e:
-        await interaction.response.send_message("An error occurred while running the crackedlb command. Please check the logs for more details.")
+        await ctx.send("An error occurred while running the crackedlb command. Please check the logs for more details.")
         log.error(f"An error occurred while running crackedlb command: {e}")
 
 async def setup(bot):
-    bot.tree.add_command(crackedlb)
+    bot.add_command(crackedlb)
