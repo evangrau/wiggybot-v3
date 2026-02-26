@@ -1,5 +1,5 @@
 import pandas as pd
-from database_connection import get_connection
+from db.database_connection import get_connection
 from loguru import logger as log
 
 def get_sql(name : str) -> str:

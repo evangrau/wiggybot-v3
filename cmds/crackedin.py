@@ -2,7 +2,6 @@ import discord
 from discord import app_commands
 from db import database as db
 from loguru import logger as log
-from settings import MODE
 
 @app_commands.command(name="crackedin", description="Opts you in to daily cracked.")
 async def crackedin(interaction : discord.Interaction):
