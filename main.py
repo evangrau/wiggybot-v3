@@ -4,14 +4,14 @@ from argparse import ArgumentParser
 from discord.ext import commands
 from loguru import logger as log
 
+synced = False
+
 def main(args):
 
     log.info(f"Starting wiggy Bot in {args.mode} mode...")
 
     # Set a variable in settings to indicate the mode
     settings.MODE = args.mode
-
-    synced = False
 
     intents = discord.Intents.default()
     intents.message_content = True
