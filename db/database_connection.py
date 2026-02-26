@@ -6,11 +6,10 @@ from loguru import logger as log
 POOL = ConnectionPool(
     pool_name="mypool",
     host=DB_HOST,
-    port=DB_PORT,
+    port=int(DB_PORT),
     user=DB_USER,
     password=DB_PASSWORD,
-    database=DB_NAME,
-    ssl_verify_cert=False
+    database=DB_NAME
 )
 
 @contextmanager

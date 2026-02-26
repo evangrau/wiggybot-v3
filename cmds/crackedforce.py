@@ -18,7 +18,7 @@ async def crackedforce(interaction : discord.Interaction):
     
     try:
         # getting access to the database
-        records = await db.get_all_cracked_records()
+        records = db.get_all_cracked_records()
 
         members = []
 

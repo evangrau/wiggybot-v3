@@ -28,7 +28,7 @@ class Cracked(commands.Cog):
         
         try:
             # getting access to the database
-            records = await db.get_all_cracked_records()
+            records = db.get_all_cracked_records()
 
             members = []
 
