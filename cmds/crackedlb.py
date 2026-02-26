@@ -1,7 +1,10 @@
 from discord.ext import commands
 from discord import Embed, Color
+from settings import ADMIN_IDS
 from db import database as db
 from loguru import logger as log
+
+WIGGY_ID = ADMIN_IDS[0]
 
 @commands.hybrid_command(name="crackedlb", description="Gets the cracked/bad leaderboard.")
 async def crackedlb(ctx : commands.Context):
@@ -43,7 +46,7 @@ async def crackedlb(ctx : commands.Context):
         await ctx.send(embed=embed)
 
     except Exception as e:
-        await ctx.send("An error occurred while running the crackedlb command. Please check the logs for more details.")
+        await ctx.send(f"An error occurred while running the crackedlb command. Please check the logs for more details. <@{WIGGY_ID}> fix your bot.")
         log.error(f"An error occurred while running crackedlb command: {e}")
 
 async def setup(bot):

@@ -7,6 +7,7 @@ from discord.ext import commands, tasks
 from loguru import logger as log
 
 CHANNEL_ID = settings.GENERAL_CHANNEL_ID
+WIGGY_ID = settings.ADMIN_IDS[0]
 
 CST = datetime.timezone(datetime.timedelta(hours=-6))
 TIME = datetime.time(hour=12, tzinfo=CST)
@@ -50,15 +51,15 @@ class Cracked(commands.Cog):
             if (rand < 5):
                 # bad
                 await self.channel.send(f"<@{m['discord_id']}>, you're bad.")
-                await db.update_record('cracked', m['discord_id'], {"bad_count": m['bad_count'] + 1})
+                db.update_record('cracked', m['discord_id'], {"bad_count": m['bad_count'] + 1})
                 log.info(f"Cracked command ran and {m['username']} was bad: {{'bad_count': {m['bad_count'] + 1}}}")
             else:
                 # cracked
                 await self.channel.send(f"<@{m['discord_id']}>, you're cracked.")
-                await db.update_record('cracked', m['discord_id'], {"cracked_count": m['cracked_count'] + 1})
+                db.update_record('cracked', m['discord_id'], {"cracked_count": m['cracked_count'] + 1})
                 log.info(f"Cracked command ran and {m['username']} was cracked: {{'cracked_count': {m['cracked_count'] + 1}}}")
         except Exception as e:
-            await self.channel.send("An error occurred while running the cracked command. Please check the logs for more details.")
+            await self.channel.send(f"An error occurred while running the cracked command. Please check the logs for more details. <@{WIGGY_ID}> fix your bot.")
             log.error(f"An error occurred while running cracked command: {e}")
 
 async def setup(bot):

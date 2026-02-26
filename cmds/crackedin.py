@@ -1,7 +1,9 @@
-import discord
+from settings import ADMIN_IDS
 from discord.ext import commands
 from db import database as db
 from loguru import logger as log
+
+WIGGY_ID = ADMIN_IDS[0]
 
 @commands.hybrid_command(name="crackedin", description="Opts you in to daily cracked.")
 async def crackedin(ctx : commands.Context):
@@ -31,7 +33,7 @@ async def crackedin(ctx : commands.Context):
         log.info(f"{ctx.author.name} ({ctx.author.id}) has been added to the cracked table with record: {record}.")
         await ctx.send(f"<@{ctx.author.id}>, you have opted in to be cracked... or bad.")
     except Exception as e:
-        await ctx.send("An error occurred while running the crackedin command. Please check the logs for more details.")
+        await ctx.send(f"An error occurred while running the crackedin command. Please check the logs for more details. <@{WIGGY_ID}> fix your bot.")
         log.error(f"An error occurred while running crackedin command: {e}")
 
 

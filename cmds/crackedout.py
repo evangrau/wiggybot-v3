@@ -1,6 +1,9 @@
 from discord.ext import commands
+from settings import ADMIN_IDS
 from db import database as db
 from loguru import logger as log
+
+WIGGY_ID = ADMIN_IDS[0]
 
 @commands.hybrid_command(name="crackedout", description="Opts you out of daily cracked.")
 async def crackedout(ctx : commands.Context):
@@ -27,7 +30,7 @@ async def crackedout(ctx : commands.Context):
         await ctx.send(f"<@{ctx.author.id}>, you are not currently opted in.")
         log.warning(f"{ctx.author.name} ({ctx.author.id}) attempted to use crackedout command but was not found in the database.")
     except Exception as e:
-        await ctx.send("An error occurred while running the crackedout command. Please check the logs for more details.")
+        await ctx.send(f"An error occurred while running the crackedout command. Please check the logs for more details. <@{WIGGY_ID}> fix your bot.")
         log.error(f"An error occurred while running crackedout command: {e}")
 
 async def setup(bot):

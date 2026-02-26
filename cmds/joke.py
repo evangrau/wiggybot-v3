@@ -1,7 +1,10 @@
 from discord.ext import commands
 import requests
 import random
+from settings import ADMIN_IDS
 from loguru import logger as log
+
+WIGGY_ID = ADMIN_IDS[0]
 
 @commands.hybrid_command(name="joke", description="Get a random joke.")
 async def joke(ctx : commands.Context):
@@ -33,7 +36,7 @@ async def joke(ctx : commands.Context):
             else:
                 await ctx.send(res["joke"])
     except Exception as e:
-        await ctx.send("An error occurred while fetching a joke. Please check the logs for more details.")
+        await ctx.send(f"An error occurred while fetching a joke. Please check the logs for more details. <@{WIGGY_ID}> fix your bot.")
         log.error(f"An error occurred while fetching a joke: {e}")
 
 async def setup(bot):
