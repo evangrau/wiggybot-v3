@@ -8,7 +8,7 @@ dependencies = [
     "discord-py>=2.6.4",
     "dotenv>=0.9.9",
     "loguru>=0.7.3",
+    "mariadb>=1.1.14",
     "pandas>=3.0.1",
-    "pyairtable>=3.3.0",
     "requests>=2.32.5",
 ]

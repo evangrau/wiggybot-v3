@@ -1,28 +1,26 @@
-from discord.ext import commands
+import discord
+from discord import app_commands
 from discord import Embed, Color
-from classes.dbconnection import DBConnection
+from db import database as db
 from loguru import logger as log
 from settings import MODE
 
-@commands.hybrid_command()
-async def crackedlb(ctx):
+@app_commands.command(name="crackedlb", description="Gets the cracked/bad leaderboard.")
+async def crackedlb(interaction : discord.Interaction):
     """Gets the cracked/bad leaderboard."""
 
     log.info("Running crackedlb command...")
 
     try:
-        # getting access to the database
-        db = DBConnection()
-
-        records = db.get_all_records(f"cracked_table_{MODE}", sort_by=["cracked:bad"])
+        records = db.get_all_cracked_records()
         members = []
 
         if not records.empty:
             for _, r in records.iterrows():
-                if r['fields.visible_bool'] == True:
-                    members.append([r['fields.discord_id'], r['fields.cracked'], r['fields.bad'], r['fields.cracked:bad']])
+                if r['visible'] == True:
+                    members.append([r['discord_id'], r['cracked'], r['bad']])
         else:
-            raise ValueError(f"No records found in the 'cracked_table_{MODE}' Airtable table.")
+            raise ValueError(f"No records found in the cracked table.")
         
         # creating the embed
         names = ""
@@ -44,10 +42,10 @@ async def crackedlb(ctx):
         embed.add_field(name="Cracked", value=cracked)
         embed.add_field(name="Bad", value=bad)
 
-        await ctx.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
 
     except Exception as e:
-        await ctx.send("An error occurred while running the crackedlb command. Please check the logs for more details.")
+        await interaction.response.send_message("An error occurred while running the crackedlb command. Please check the logs for more details.")
         log.error(f"An error occurred while running crackedlb command: {e}")
 
 async def setup(bot):

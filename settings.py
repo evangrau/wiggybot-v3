@@ -17,8 +17,11 @@ MODE = "prod"
 
 ADMIN_IDS = [294217244802678784]
 
-AIRTABLE_DB = os.getenv('AIRTABLE_DATABASE_ID')
-AIRTABLE_API_SECRET = os.getenv('AIRTABLE_TOKEN')
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
 
 DISCORD_API_SECRET = os.getenv('DISCORD_TOKEN')
 

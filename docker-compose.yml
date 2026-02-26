@@ -2,12 +2,25 @@ services:
   prod:
     container_name: wiggybot
     command: ["-m", "prod"]
+    restart: unless-stopped
     build: .
     volumes:
       - ./logs:/app/logs
+    env_file:
+      - .env
+    networks:
+      - appnet
   dev:
     container_name: wiggybot-dev
     command: ["-m", "dev"]
     build: .
     volumes:
       - .:/app
+    env_file:
+      - .env.dev
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    external: true

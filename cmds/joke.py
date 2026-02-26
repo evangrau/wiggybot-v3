@@ -1,15 +1,15 @@
-from discord.ext import commands
+import discord
+from discord import app_commands
 import requests
 import random
 from loguru import logger as log
 
-@commands.hybrid_command()
-async def joke(ctx):
+@app_commands.command(name="joke", description="Get a random joke.")
+async def joke(interaction : discord.Interaction):
     """Gets a random joke"""
 
     log.info("Running joke command...")
 
-    # headers = {}
     headers = {
         "Accept": "application/json" 
     }
@@ -27,21 +27,15 @@ async def joke(ctx):
         res = r.json()
 
         if type == 0:
-            await ctx.send(res["joke"])
+            await interaction.response.send_message(res["joke"])
         else:
             if res["type"] == "twopart":
-                await ctx.send(f"{res['setup']}\n||{res['delivery']}||")
+                await interaction.response.send_message(f"{res['setup']}\n||{res['delivery']}||")
             else:
-                await ctx.send(res["joke"])
+                await interaction.response.send_message(res["joke"])
     except Exception as e:
-        await ctx.send("An error occurred while fetching a joke. Please check the logs for more details.")
+        await interaction.response.send_message("An error occurred while fetching a joke. Please check the logs for more details.")
         log.error(f"An error occurred while fetching a joke: {e}")
-
-@joke.error
-async def joke_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Please specify the type of joke you want.")
-        log.warning(f"{ctx.author.name} ({ctx.author.id}) did not specify the type of joke.")
 
 async def setup(bot):
     bot.add_command(joke)
