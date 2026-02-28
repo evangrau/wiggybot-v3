@@ -1,3 +1,4 @@
+import random
 import pandas as pd
 from db.database_connection import get_connection
 from loguru import logger as log
@@ -53,3 +54,32 @@ def create_record(table: str, record: dict):
             log.info(f"Successfully created record in table {table} with values: {record}.")
     except Exception as e:
         log.error(f"An error occurred while creating record in table {table} with values {record}: {e}")
+
+def get_number_of_records_from_table(table: str) -> int:
+    """Get the number of records in the specified table."""
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            sql = f"SELECT COUNT(*) FROM {table}"
+            cursor.execute(sql)
+            count = cursor.fetchone()[0]
+            log.info(f"Successfully retrieved the number of records from table {table}: {count}.")
+            return count
+    except Exception as e:
+        log.error(f"An error occurred while retrieving the number of records from table {table}: {e}")
+        return 0
+
+def get_random_quote() -> pd.DataFrame:
+    """Get a random quote from the database."""
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            sql = get_sql("get_quote_by_id")
+            cursor.execute(sql, {"id": random.randint(1, get_number_of_records_from_table('quotes'))})
+            record = cursor.fetchone()
+            df = pd.DataFrame([record], columns=[desc[0] for desc in cursor.description])
+            log.info(f"Successfully retrieved a random quote from the database: {record}.")
+            return df
+    except Exception as e:
+        log.error(f"An error occurred while retrieving a random quote from the database: {e}")
+        return pd.DataFrame()
