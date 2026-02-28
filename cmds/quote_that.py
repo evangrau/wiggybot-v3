@@ -7,8 +7,7 @@ from db import database as db
 WIGGY_ID = ADMIN_IDS[0]
 
 @commands.hybrid_command(name="quote_that", description="Quote something.")
-async def quote_that(
-    ctx: commands.Context, quote: str, author: discord.User):
+async def quote_that(ctx: commands.Context, quote: str, author: discord.User):
     """Quotes a message with the provided quote and author."""
 
     log.info("Running quote_that command...")
