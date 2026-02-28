@@ -21,4 +21,4 @@ async def quote_message(interaction: discord.Interaction, message: discord.Messa
         await interaction.response.send_message("An error occurred while adding the quote. Please tell wiggy to check the logs for more details.", ephemeral=True)
 
 async def setup(bot):
-    bot.add_command(quote_message)
+    bot.tree.add_command(quote_message)
